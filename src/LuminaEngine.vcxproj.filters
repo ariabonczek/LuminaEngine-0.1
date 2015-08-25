@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{c26e0c70-84dc-4fef-852e-8a6b1255ec06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{deeb01ec-fa43-4c57-9665-2a1afbe86d3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\States">
+      <UniqueIdentifier>{86dd0966-ba71-47fd-afba-fe10166b21da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{94c2e83e-1b93-4594-8ec4-754bda605599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{f608a449-e21f-4aa4-9e21-284d0f6a3ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Data">
+      <UniqueIdentifier>{5baa2d48-9df8-429f-a624-4cce8ec9c4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{224f3a06-a74e-41a9-8c68-1561916ef340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{fd107902-9e24-4c5f-81ff-5dfc75a19618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{e2715786-a5f1-401b-8422-a4472f7a31d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{b989e70c-a3b7-40e7-93fe-3bcbaeca466b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Primitives">
+      <UniqueIdentifier>{10758416-6e12-4c22-b48c-81add55b0e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Primitives">
+      <UniqueIdentifier>{62d71300-82ee-4667-b7f5-e9c338f6862d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility\Debug">
+      <UniqueIdentifier>{6af73df3-1b7b-4cba-bbec-8e8dee0cf99b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Debug">
+      <UniqueIdentifier>{e07ab066-fb1b-4adf-a4b9-b8d09499a61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\States">
+      <UniqueIdentifier>{561df892-d107-457f-bea8-ada07d1d85a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Lighting">
+      <UniqueIdentifier>{94620403-9b0b-4b04-b7d6-1aa214a83fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Lighting">
+      <UniqueIdentifier>{60b6cc59-6ffb-4f38-98b7-db5b5e770f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Data">
+      <UniqueIdentifier>{a1f7bcab-eb37-445e-9089-be58d8d11502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{93c03a62-2859-4f48-ba17-9ca60b236a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Vertex">
+      <UniqueIdentifier>{8e89c587-f053-4252-b418-3710053bfca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Pixel">
+      <UniqueIdentifier>{fa6a8181-34fb-495a-887c-f73bcdde003c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Include">
+      <UniqueIdentifier>{fc472810-5b0b-416a-a3af-3cc3bd004e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestGame">
+      <UniqueIdentifier>{e2b785e9-809c-4450-a6cc-12c689edf78c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestGame">
+      <UniqueIdentifier>{e196c14e-bc76-4add-8dcc-1601fa060e33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Window.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GraphicsDevice.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Matrix.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\ResourceManager.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\BatchManager.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RenderBatch.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Component.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\GameObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Transform.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Mesh.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Resource.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture2D.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Debug\Debug.cpp">
+      <Filter>Source Files\Utility\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Geometry.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Lighting\Light.cpp">
+      <Filter>Source Files\Graphics\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Lighting\PointLight.cpp">
+      <Filter>Source Files\Graphics\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Lighting\SpotLight.cpp">
+      <Filter>Source Files\Graphics\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Lighting\DirectionalLight.cpp">
+      <Filter>Source Files\Graphics\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Scene.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\MeshData.cpp">
+      <Filter>Source Files\Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\MeshBuilder.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\MeshRenderer.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Material.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Primitives\Cube.cpp">
+      <Filter>Source Files\Objects\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Camera.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGame\TestScene.cpp">
+      <Filter>Source Files\TestGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\States\RasterizerState.cpp">
+      <Filter>Source Files\Graphics\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\States\BlendState.cpp">
+      <Filter>Source Files\Graphics\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Primitives\Plane.cpp">
+      <Filter>Source Files\Objects\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Color.cpp">
+      <Filter>Source Files\Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Sampler.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Graphics.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\States\BlendState.hpp">
+      <Filter>Header Files\Graphics\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\States\RasterizerState.hpp">
+      <Filter>Header Files\Graphics\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\States\DepthStencilState.hpp">
+      <Filter>Header Files\Graphics\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Color.hpp">
+      <Filter>Header Files\Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Vertex.hpp">
+      <Filter>Header Files\Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\ResourceManager.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\InputManager.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Timer.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\SceneManager.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Scene.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Material.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shader.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Quaternion.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\MeshBuilder.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Camera.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\ParticleSystem.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderBatch.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\BatchManager.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Mesh.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Component.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\GameObject.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Transform.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Resource.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Utility.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Texture2D.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GraphicsDevice.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Lumina.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\stb_image.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Image.hpp">
+      <Filter>Header Files\Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Debug\Debug.hpp">
+      <Filter>Header Files\Utility\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Geometry.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Lighting\Light.hpp">
+      <Filter>Header Files\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Lighting\DirectionalLight.hpp">
+      <Filter>Header Files\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Lighting\SpotLight.hpp">
+      <Filter>Header Files\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Lighting\PointLight.hpp">
+      <Filter>Header Files\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Lighting\Lighting.hpp">
+      <Filter>Header Files\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\MeshData.hpp">
+      <Filter>Header Files\Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\MeshRenderer.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Primitives\Cube.hpp">
+      <Filter>Header Files\Objects\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Objects.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGame\TestScene.hpp">
+      <Filter>Header Files\TestGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Primitives\Plane.hpp">
+      <Filter>Header Files\Objects\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Window.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Sampler.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Built-In Shaders\Pixel\DefaultPixel.hlsl">
+      <Filter>Resource Files\Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Built-In Shaders\Vertex\DefaultVertex.hlsl">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Built-In Shaders\Include\Lumina.hlsli">
+      <Filter>Resource Files\Shaders\Include</Filter>
+    </None>
+    <None Include="Built-In Shaders\Include\Lighting.hlsli">
+      <Filter>Resource Files\Shaders\Include</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EF244ED0-D1F2-4F2F-A5FC-9E83AF2400B9}</ProjectGuid>
+    <RootNamespace>LuminaEngine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)content\*" "$(OutDir)" /s /y
+xcopy "$(SolutionDir)bin\*" "$(OutDir)" /s /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)content\*" "$(OutDir)" /s /y
+xcopy "$(SolutionDir)bin\*" "$(OutDir)" /s /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Graphics\BatchManager.cpp" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\Color.cpp" />
+    <ClCompile Include="Graphics\Lighting\DirectionalLight.cpp" />
+    <ClCompile Include="Graphics\Lighting\Light.cpp" />
+    <ClCompile Include="Graphics\Lighting\PointLight.cpp" />
+    <ClCompile Include="Graphics\Lighting\SpotLight.cpp" />
+    <ClCompile Include="Graphics\Material.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\MeshBuilder.cpp" />
+    <ClCompile Include="Graphics\MeshData.cpp" />
+    <ClCompile Include="Graphics\MeshRenderer.cpp" />
+    <ClCompile Include="Graphics\RenderBatch.cpp" />
+    <ClCompile Include="Graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
+    <ClCompile Include="Graphics\Sampler.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Graphics\States\BlendState.cpp" />
+    <ClCompile Include="Graphics\States\RasterizerState.cpp" />
+    <ClCompile Include="Graphics\Texture2D.cpp" />
+    <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Math\Matrix.cpp" />
+    <ClCompile Include="Math\Geometry.cpp" />
+    <ClCompile Include="Math\Vector.cpp" />
+    <ClCompile Include="Objects\Component.cpp" />
+    <ClCompile Include="Objects\GameObject.cpp" />
+    <ClCompile Include="Objects\Primitives\Cube.cpp" />
+    <ClCompile Include="Objects\Primitives\Plane.cpp" />
+    <ClCompile Include="Objects\Transform.cpp" />
+    <ClCompile Include="TestGame\TestScene.cpp" />
+    <ClCompile Include="Utility\Debug\Debug.cpp" />
+    <ClCompile Include="Utility\Resource.cpp" />
+    <ClCompile Include="Utility\ResourceManager.cpp" />
+    <ClCompile Include="Utility\Scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Graphics\BatchManager.hpp" />
+    <ClInclude Include="Graphics\Camera.hpp" />
+    <ClInclude Include="Graphics\Color.hpp" />
+    <ClInclude Include="Graphics\GraphicsDevice.hpp" />
+    <ClInclude Include="Graphics\Image.hpp" />
+    <ClInclude Include="Graphics\Lighting\DirectionalLight.hpp" />
+    <ClInclude Include="Graphics\Lighting\Light.hpp" />
+    <ClInclude Include="Graphics\Lighting\Lighting.hpp" />
+    <ClInclude Include="Graphics\Lighting\PointLight.hpp" />
+    <ClInclude Include="Graphics\Lighting\SpotLight.hpp" />
+    <ClInclude Include="Graphics\Mesh.hpp" />
+    <ClInclude Include="Graphics\MeshData.hpp" />
+    <ClInclude Include="Graphics\MeshRenderer.hpp" />
+    <ClInclude Include="Graphics\RenderBatch.hpp" />
+    <ClInclude Include="Graphics\Graphics.hpp" />
+    <ClInclude Include="Graphics\Material.hpp" />
+    <ClInclude Include="Graphics\MeshBuilder.hpp" />
+    <ClInclude Include="Graphics\ParticleSystem.hpp" />
+    <ClInclude Include="Graphics\Renderer.hpp" />
+    <ClInclude Include="Graphics\Sampler.hpp" />
+    <ClInclude Include="Graphics\Shader.hpp" />
+    <ClInclude Include="Graphics\States\BlendState.hpp" />
+    <ClInclude Include="Graphics\States\DepthStencilState.hpp" />
+    <ClInclude Include="Graphics\States\RasterizerState.hpp" />
+    <ClInclude Include="Graphics\Texture2D.hpp" />
+    <ClInclude Include="Graphics\Vertex.hpp" />
+    <ClInclude Include="Graphics\Window.hpp" />
+    <ClInclude Include="Lumina.hpp" />
+    <ClInclude Include="Math\Math.hpp" />
+    <ClInclude Include="Math\Matrix.hpp" />
+    <ClInclude Include="Math\Quaternion.hpp" />
+    <ClInclude Include="Math\Geometry.hpp" />
+    <ClInclude Include="Math\Vector.hpp" />
+    <ClInclude Include="Objects\Component.hpp" />
+    <ClInclude Include="Objects\GameObject.hpp" />
+    <ClInclude Include="Objects\Objects.hpp" />
+    <ClInclude Include="Objects\Primitives\Cube.hpp" />
+    <ClInclude Include="Objects\Primitives\Plane.hpp" />
+    <ClInclude Include="Objects\Transform.hpp" />
+    <ClInclude Include="TestGame\TestScene.hpp" />
+    <ClInclude Include="Utility\Debug\Debug.hpp" />
+    <ClInclude Include="Utility\InputManager.hpp" />
+    <ClInclude Include="Utility\Resource.hpp" />
+    <ClInclude Include="Utility\ResourceManager.hpp" />
+    <ClInclude Include="Utility\Scene.hpp" />
+    <ClInclude Include="Utility\SceneManager.hpp" />
+    <ClInclude Include="Utility\stb_image.h" />
+    <ClInclude Include="Utility\Timer.hpp" />
+    <ClInclude Include="Utility\Utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Built-In Shaders\Pixel\DefaultPixel.hlsl">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Shaders/%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)Shaders/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Built-In Shaders\Vertex\DefaultVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Shaders/%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)Shaders/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Built-In Shaders\Include\Lighting.hlsli" />
+    <None Include="Built-In Shaders\Include\Lumina.hlsli" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
