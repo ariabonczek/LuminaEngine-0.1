@@ -6,6 +6,7 @@
 NS_BEGIN
 
 class Component;
+class Transform;
 
 /// <summary>
 /// 
@@ -57,6 +58,11 @@ public:
 	/// Returns whether or not an object is static
 	/// </summary>
 	bool GetIsStatic()const;
+
+	/// <summary>
+	/// Syntactic sugar for getcomponent transform
+	/// </summary>
+	Transform* GetTransform();
 
 	GameObject* GetParent()const;
 	std::vector<GameObject*> GetChildren()const;

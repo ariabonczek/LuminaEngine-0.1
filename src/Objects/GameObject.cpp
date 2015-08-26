@@ -142,6 +142,11 @@ bool GameObject::GetIsStatic()const
 	return isStatic;
 }
 
+Transform* GameObject::GetTransform()
+{
+	return (Transform*)(components["Transform"]);
+}
+
 GameObject* GameObject::GetParent()const
 {
 	// I need an adult
