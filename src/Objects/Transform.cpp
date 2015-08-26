@@ -34,7 +34,6 @@ void Transform::Rotate(Vector3 rotation)
 	Matrix r = Matrix::CreateRotation(rotation);
 
 	localRotation = localRotation + rotation;
-
 	UpdateWorldMatrix();
 	if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); }
 }
@@ -83,13 +82,17 @@ Vector3 Transform::GetWorldScale()
 	if (IsBatman()) return localScale;
 	else
 	{
-		return localScale + GetParentTransform()->GetWorldScale();
-	}
+		return localScale * GetParentTransform()->GetWorldScale();
+	} 
 }
 
 Matrix Transform::GetWorldMatrix()const
 {
-	return worldCache;
+	if (IsBatman()) return worldCache;
+	else
+	{
+		return worldCache * GetParentTransform()->GetWorldMatrix();
+	}
 }
 
 Matrix Transform::GetWorldInverseTranspose()
@@ -108,8 +111,12 @@ void Transform::UpdateWorldMatrix()
 	s = Matrix::CreateScale(worldScale);
 	t = Matrix::CreateTranslation(worldPosition);
 
-	worldCache = s * r * t;
-} 
+	worldCache = t*r*s;
+
+	forward = Vector3::Normalize(Vector3::Forward * r);
+	right = Vector3::Normalize(Vector3::Cross(Vector3::Up, forward));
+	up = Vector3::Cross(forward, right);
+}
 
 bool Transform::IsBatman()const
 {

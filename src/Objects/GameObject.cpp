@@ -10,10 +10,11 @@
 
 NS_BEGIN
 
-GameObject::GameObject():
+GameObject::GameObject(std::string name):
 parent(nullptr),
 isStatic(false), 
-isDestroyed(false)
+isDestroyed(false),
+name(name)
 {
 	children.reserve(10);
 	InitializeComponentMap();
@@ -151,6 +152,11 @@ std::vector<GameObject*> GameObject::GetChildren()const
 {
 	// I AM AN ADULT
 	return children;
+}
+
+std::string GameObject::GetName()const
+{
+	return name;
 }
 
 void GameObject::InitializeComponentMap()

@@ -107,10 +107,7 @@ void Camera::LookAt(Vector3 target)
 	right = view.Right();
 	up = view.Up();
 	look = view.Forward();
-
 	// TODO: Change the transform rotation based on new view 
-	Matrix rotation = Matrix::Inverse(view);
-	cachedTransform->SetLocalRotation(Matrix::RotationToEuler(rotation));
 }
 
 void Camera::UpdateViewMatrix()
@@ -122,16 +119,21 @@ void Camera::UpdateViewMatrix()
 		Vector3 r = cachedTransform->GetWorldRotation();
 		Matrix rm = Matrix::CreateRotation(r);
 
+		right = cachedTransform->GetRight();
+		up = cachedTransform->GetUp();
+		look = cachedTransform->GetForward();
+
 		Vector3 pos = cachedTransform->GetWorldPosition();
 
 		float x = -Vector3::Dot(pos, right);
 		float y = -Vector3::Dot(pos, up);
 		float z = -Vector3::Dot(pos, look);
 
-		view = Matrix::Identity * rm;
-		view.m41 = x;
-		view.m42 = y;
-		view.m43 = z;
+		view = Matrix(
+			right.x, up.x, look.x, 0.0f,
+			right.y, up.y, look.y, 0.0f,
+			right.z, up.z, look.z, 0.0f,
+			x, y, z, 1.0f);
 
 		// Cache the viewProjection matrix
 		viewProjection = view * projection;

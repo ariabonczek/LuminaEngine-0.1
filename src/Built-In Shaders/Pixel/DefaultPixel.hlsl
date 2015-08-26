@@ -16,8 +16,10 @@ sampler _Sampler : register(s0);
 float4 main(MeshVertexOutput input) : SV_TARGET
 {
 	float4 texcolor = _Albedo.Sample(_Sampler, input.texcoord);
-	float3 normal = UnpackNormals(_Normal.Sample(_Sampler, input.texcoord));
-	float metalness = _Metalness.Sample(_Sampler, input.texcoord).r;
+	return texcolor;
+	float3 normal = input.normal;
+	//float3 normal = UnpackNormals(_Normal.Sample(_Sampler, input.texcoord));
+	//float metalness = _Metalness.Sample(_Sampler, input.texcoord).r;
 	
 	float3 viewvector = normalize(eyePos - input.worldpos);
 	

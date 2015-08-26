@@ -13,7 +13,7 @@ class Component;
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(std::string name = "GameObject");
 	virtual ~GameObject();
 
 	// TODO: Call initialize on all GameObjects
@@ -62,9 +62,13 @@ public:
 	std::vector<GameObject*> GetChildren()const;
 	#pragma endregion
 
+	std::string GetName()const;
+
 protected:
 	void InitializeComponentMap();
 	void OnPositionChange();
+
+	std::string name;
 
 	GameObject* parent;
 	std::vector<GameObject*> children;

@@ -86,12 +86,12 @@ float4 LambertianBDRF(float4 cdiff)
 // Ideally, support multiple lighting models here
 float4 PBRCalculateFinalColor(float4 albedo, float3 normal, float roughness, float metalness, float3 viewvector, DirectionalLight dLight)
 {
-	float3 halfvector = normalize(l + v);
+	float3 halfvector = normalize(-dLight.direction + viewvector);
 
 	float4 diffuse = LambertianBDRF(albedo);
-	float4 specular = CookTorrenceMicrofacetSpecular(roughness, metalness, normal, viewvector, halfvector, dLight.direction);
+	float4 specular = CookTorrenceMicrofacetSpecular(roughness, metalness, normal, viewvector, halfvector, -dLight.direction);
 	
-	return float4(3.141592 * (diffuse + specular).rgb * (dLight.color.rgb * dLight.intensity * dot(normal, dLight.direction)).rgb , 1.0);
+	return float4(3.141592 * (diffuse + specular).rgb * (dLight.color.rgb * dLight.intensity * dot(normal, -dLight.direction)).rgb , 1.0);
 }
 
 #endif
