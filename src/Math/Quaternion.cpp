@@ -30,15 +30,15 @@ x(v.x), y(v.y), z(v.z), w(v.w)
 
 }
 
-Quaternion Quaternion::CreateFromAxisAngle(Vector3& axis, float& angle)
+Quaternion Quaternion::CreateFromAxisAngle(Vector3 axis, float angle)
 {
-	float half = angle * 0.5f;
+	float half = DegreesToRadians(angle) * 0.5f;
 	float sin = sinf(DegreesToRadians(half));
 	float cos = cosf(DegreesToRadians(half));
 	return Quaternion(axis.x * sin, axis.y * sin, axis.z * sin, cos);
 }
 
-Quaternion Quaternion::CreateFromRotationMatrix(Matrix& m)
+Quaternion Quaternion::CreateFromRotationMatrix(Matrix m)
 {
 	Quaternion q;
 	float sqrt;
@@ -94,11 +94,11 @@ Quaternion Quaternion::CreateFromRotationMatrix(Matrix& m)
 	}
 }
 
-Quaternion Quaternion::LookRotation(Vector3& v)
+Quaternion Quaternion::CreateFromEulerAngles(Vector3 v)
 {
-	float y = v.y * 0.5f;
-	float x = v.x * 0.5f;
-	float z = v.z * 0.5f;
+	float y = DegreesToRadians(v.y * 0.5f);
+	float x = DegreesToRadians(v.x * 0.5f);
+	float z = DegreesToRadians(v.z * 0.5f);
 	
 	float siny = sinf(DegreesToRadians(y));
 	float cosy = cosf(DegreesToRadians(y));
@@ -156,6 +156,11 @@ float& Quaternion::operator[](const int index)
 	default:
 		throw "IndexOutOfRangeException";
 	}
+}
+
+Quaternion Quaternion::operator+(const Quaternion& q)
+{
+	return Quaternion(x + q.x, y + q.y, z + q.z, w + q.w);
 }
 
 Quaternion Quaternion::operator-()

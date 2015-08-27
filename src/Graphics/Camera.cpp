@@ -116,8 +116,6 @@ void Camera::UpdateViewMatrix()
 	{
 		// TODO: Investigate possible optimization = check if view is changed before updating it
 		// Note: Transform should have GetForward() etc, use those when they work
-		Vector3 r = cachedTransform->GetWorldRotation();
-		Matrix rm = Matrix::CreateRotation(r);
 
 		right = cachedTransform->GetRight();
 		up = cachedTransform->GetUp();

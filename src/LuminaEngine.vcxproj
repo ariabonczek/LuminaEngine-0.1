@@ -128,6 +128,7 @@ xcopy "$(SolutionDir)bin\*" "$(OutDir)" /s /y</Command>
     <ClCompile Include="Utility\Resource.cpp" />
     <ClCompile Include="Utility\ResourceManager.cpp" />
     <ClCompile Include="Utility\Scene.cpp" />
+    <ClCompile Include="Utility\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />

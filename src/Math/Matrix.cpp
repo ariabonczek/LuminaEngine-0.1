@@ -1,5 +1,6 @@
 #include "Matrix.hpp"
 #include "Vector.hpp"
+#include "Quaternion.hpp"
 
 NS_BEGIN
 
@@ -187,6 +188,25 @@ Matrix Matrix::Add(Matrix& m1, Matrix& m2)
 Matrix Matrix::Subtract(Matrix& m1, Matrix& m2)
 {
 	return m1 - m2;
+}
+
+Matrix Matrix::CreateFromQuaternion(Quaternion q)
+{
+	float x2 = q.x*q.x;
+	float y2 = q.y*q.y;
+	float z2 = q.z*q.z;
+	float xy = q.x*q.y;
+	float zw = q.z*q.w;
+	float xz = q.z*q.x;
+	float yw = q.y*q.w;
+	float yz = q.y*q.z;
+	float xw = q.x*q.w;
+
+	return Matrix(
+		1.0f - (2.0f * (y2 + z2)),   2.0f * (xy + zw),          2.0f * (xz - yw),		   0.0f,
+		2.0f * (xy - zw),            1.0f - (2.0f * (z2 + x2)), 2.0f * (yz + xw),		   0.0f,
+		2.0f * (xz + yw),			 2.0f * (yz - xw),          1.0f - (2.0f * (y2 + x2)), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Matrix Matrix::CreateLookAt(Vector3 position, Vector3 target, Vector3 up)

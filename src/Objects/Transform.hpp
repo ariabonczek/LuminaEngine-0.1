@@ -20,24 +20,23 @@ public:
 	void Initialize();
 
 	void Translate(Vector3 v);
-	void Rotate(Vector3 rotation);
-	void Rotate(Vector3 axis, float angle);
+	void Rotate(Quaternion q);
 
 	void SetLocalPosition(float x, float y, float z);
 	void SetLocalPosition(Vector3 position);
 
-	void SetLocalRotation(float x, float y, float z);
-	void SetLocalRotation(Vector3 rotation);
+	void SetLocalRotation(Quaternion rotation);
 
 	void SetLocalScale(float x, float y, float z);
 	void SetLocalScale(Vector3 scale);
 
 	Vector3 GetLocalPosition()const;
-	Vector3 GetLocalRotation()const;
+	Quaternion GetLocalRotation()const;
 	Vector3 GetLocalScale()const;
+	Vector3 GetEulerAngles()const;
 
 	Vector3 GetWorldPosition();
-	Vector3 GetWorldRotation();
+	Quaternion GetWorldRotation();
 	Vector3 GetWorldScale();
 
 	Matrix GetWorldMatrix()const;
@@ -57,8 +56,10 @@ private:
 	Transform* GetParentTransform()const;
 
 	Vector3 localPosition;
-	Vector3 localRotation;
 	Vector3 localScale;
+	Quaternion localRotation;
+	Vector3 eulerAngles;
+
 
 	Vector3 forward;
 	Vector3 up;

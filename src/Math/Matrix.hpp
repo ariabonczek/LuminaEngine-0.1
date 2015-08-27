@@ -8,6 +8,7 @@ NS_BEGIN
 struct Vector2;
 struct Vector3;
 struct Vector4;
+struct Quaternion;
 
 struct Matrix
 {
@@ -48,6 +49,7 @@ struct Matrix
 	//////////////////////
 	static Matrix Add(Matrix& m1, Matrix& m2);
 	static Matrix Subtract(Matrix& m1, Matrix& m2);
+	static Matrix CreateFromQuaternion(Quaternion q);
 	static Matrix CreateLookAt(Vector3 position, Vector3 target, Vector3 up);
 	static Matrix CreateOrthographic(float width, float height, float zNear, float zFar);
 	static Matrix CreatePerspective(float width, float height, float zNear, float zFar);

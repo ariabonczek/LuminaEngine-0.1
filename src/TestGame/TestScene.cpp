@@ -44,10 +44,6 @@ void TestScene::Update(float dt)
 {
 	for (GameObject* p : objs)
 	{
-		if (p->GetName() == "Cube")
-		{
-			p->GetComponent<Transform>()->Rotate(Vector3::Right * 0.01); 
-		}
 		p->Update();
 	}
 	MoveCamera(activeCamera->GetGameObject()->GetComponent<Transform>(), 0.0167f);
@@ -64,14 +60,12 @@ void MoveCamera(Transform* t, float dt)
 	if (GetAsyncKeyState('D') & 0x8000)
 		t->Translate(t->GetRight() * dt);
 
-	dt *= 10;
-
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
-		t->Rotate(-t->GetRight() * dt);
+		t->Rotate(Quaternion::CreateFromAxisAngle(-t->GetRight(), dt));
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-		t->Rotate(-t->GetUp() * dt);
+		t->Rotate(Quaternion::CreateFromAxisAngle(-t->GetUp(), dt));
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
-		t->Rotate(t->GetUp() * dt);
+		t->Rotate(Quaternion::CreateFromAxisAngle(t->GetUp(), dt));
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-		t->Rotate(t->GetRight() * dt);
+		t->Rotate(Quaternion::CreateFromAxisAngle(t->GetRight(), dt));
 }

@@ -30,15 +30,16 @@ struct Quaternion
 	//
 	// Static Functions
 	//
-	static Quaternion CreateFromAxisAngle(Vector3& axis, float& angle);
-	static Quaternion CreateFromRotationMatrix(Matrix& m);
-	static Quaternion LookRotation(Vector3& v);
+	static Quaternion CreateFromAxisAngle(Vector3 axis, float angle);
+	static Quaternion CreateFromRotationMatrix(Matrix m);
+	static Quaternion CreateFromEulerAngles(Vector3 v);
 
 	static float Magnitude(Quaternion& q);
 	static Quaternion Inverse(Quaternion& q);
 	static Quaternion Multiply(Quaternion& q1, Quaternion& q2);
 	static float Dot(Quaternion& q1, Quaternion& q2);
 
+	Quaternion operator+(const Quaternion& q);
 	float& operator[](const int index);
 	Quaternion operator-();
 };

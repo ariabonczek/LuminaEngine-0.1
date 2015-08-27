@@ -7,8 +7,9 @@ NS_BEGIN
 
 Transform::Transform() :
 localPosition(0.0f, 0.0f, 0.0f),
-localRotation(0.0f, 0.0f, 0.0f),
+localRotation(0.0f, 0.0f, 0.0f, 1.0f),
 localScale(1.0f, 1.0f, 1.0f),
+eulerAngles(0.0f, 0.0f, 0.0f),
 forward(0.0f, 0.0f, 1.0f),
 up(0.0f, 1.0f, 0.0f),
 right(1.0f, 0.0f, 0.0f)
@@ -29,36 +30,25 @@ void Transform::Translate(Vector3 v)
 	if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); }
 }
 
-void Transform::Rotate(Vector3 rotation)
+void Transform::Rotate(Quaternion rotation)
 {
-	Matrix r = Matrix::CreateRotation(rotation);
+	Matrix r = Matrix::CreateFromQuaternion(rotation);
 
 	localRotation = localRotation + rotation;
 	UpdateWorldMatrix();
 	if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); }
 }
 
-void Transform::Rotate(Vector3 axis, float angle)
-{
-	Matrix m = Matrix::CreateRotationByAxisAngle(axis, angle);
-
-	Vector3 delta = Matrix::RotationToEuler(m);
-	localRotation = localRotation + delta;
-
-	UpdateWorldMatrix();
-	if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); }
-}
-
 void Transform::SetLocalPosition(float x, float y, float z){ localPosition = Vector3(x, y, z); UpdateWorldMatrix(); if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); } }
 void Transform::SetLocalPosition(Vector3 position){ localPosition = position; }
-void Transform::SetLocalRotation(float x, float y, float z){ localRotation = Vector3(x, y, z); UpdateWorldMatrix(); if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); } }
-void Transform::SetLocalRotation(Vector3 rotation){ localRotation = rotation; }
+void Transform::SetLocalRotation(Quaternion rotation){ localRotation = rotation; UpdateWorldMatrix(); if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); } }
 void Transform::SetLocalScale(float x, float y, float z) { localScale = Vector3(x, y, z); UpdateWorldMatrix(); if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); } }
 void Transform::SetLocalScale(Vector3 scale){ localScale = scale; }
 
 Vector3 Transform::GetLocalPosition()const{ return localPosition; }
-Vector3 Transform::GetLocalRotation()const{ return localRotation; }
+Quaternion Transform::GetLocalRotation()const{ return localRotation; }
 Vector3 Transform::GetLocalScale()const {return localScale; }
+Vector3 Transform::GetEulerAngles()const { throw "Not implemented"; }
 
 Vector3 Transform::GetWorldPosition()
 {
@@ -68,7 +58,7 @@ Vector3 Transform::GetWorldPosition()
 		return localPosition + GetParentTransform()->GetWorldPosition();
 	}
 }
-Vector3 Transform::GetWorldRotation()
+Quaternion Transform::GetWorldRotation()
 {
 	if (IsBatman()) return localRotation;
 	else
@@ -104,10 +94,10 @@ void Transform::UpdateWorldMatrix()
 {
 	Matrix r, s, t;
 	Vector3 worldPosition = GetWorldPosition();
-	Vector3 worldRotation = GetWorldRotation();
+	Quaternion worldRotation = GetWorldRotation();
 	Vector3 worldScale = GetWorldScale();
 
-	r = Matrix::CreateRotation(worldRotation);
+	r = Matrix::CreateFromQuaternion(worldRotation);
 	s = Matrix::CreateScale(worldScale);
 	t = Matrix::CreateTranslation(worldPosition);
 
