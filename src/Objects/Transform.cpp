@@ -102,7 +102,7 @@ void Transform::UpdateWorldMatrix()
 	worldCache = t*r*s;
 
 	forward = Vector3::Normalize(Vector3::Forward * r);
-	right = Vector3::Normalize(Vector3::Cross(Vector3::Up, forward));
+	right = Vector3::Normalize(Vector3::Right * r);
 	up = Vector3::Cross(forward, right);
 }
 
