@@ -121,20 +121,20 @@ bool Matrix::operator==(const Matrix& m)
 Matrix operator*(const Matrix& m, float s)
 {
 	return Matrix(
-		m.m11 / s, m.m12 / s, m.m13 / s, m.m14 / s,
-		m.m21 / s, m.m22 / s, m.m23 / s, m.m24 / s,
-		m.m31 / s, m.m32 / s, m.m33 / s, m.m34 / s,
-		m.m41 / s, m.m42 / s, m.m43 / s, m.m44 / s
+		m.m11 * s, m.m12 * s, m.m13 *s, m.m14 * s,
+		m.m21 * s, m.m22 * s, m.m23 *s, m.m24 * s,
+		m.m31 * s, m.m32 * s, m.m33 *s, m.m34 *s,
+		m.m41 * s, m.m42 * s, m.m43 *s, m.m44 * s
 		);
 }
 
 Matrix operator*(float s, Matrix& m)
 {
 	return Matrix(
-		m.m11 / s, m.m12 / s, m.m13 / s, m.m14 / s,
-		m.m21 / s, m.m22 / s, m.m23 / s, m.m24 / s,
-		m.m31 / s, m.m32 / s, m.m33 / s, m.m34 / s,
-		m.m41 / s, m.m42 / s, m.m43 / s, m.m44 / s
+		m.m11 * s, m.m12 * s, m.m13 * s, m.m14 * s,
+		m.m21 * s, m.m22 * s, m.m23 * s, m.m24 * s,
+		m.m31 * s, m.m32 * s, m.m33 * s, m.m34 * s,
+		m.m41 * s, m.m42 * s, m.m43 * s, m.m44 * s
 		);
 }
 
@@ -203,9 +203,9 @@ Matrix Matrix::CreateFromQuaternion(Quaternion q)
 	float xw = q.x*q.w;
 
 	return Matrix(
-		1.0f - (2.0f * (y2 + z2)),   2.0f * (xy + zw),          2.0f * (xz - yw),		   0.0f,
-		2.0f * (xy - zw),            1.0f - (2.0f * (z2 + x2)), 2.0f * (yz + xw),		   0.0f,
-		2.0f * (xz + yw),			 2.0f * (yz - xw),          1.0f - (2.0f * (y2 + x2)), 0.0f,
+		1.0f - (2.0f * (y2 + z2)), 2.0f * (xy + zw),          2.0f * (xz - yw), 0.0f,
+		2.0f * (xy - zw),		   1.0f - (2.0f * (z2 + x2)), 2.0f * (yz + xw), 0.0f,
+		2.0f * (xz + yw),		   2.0f * (yz - xw),          1.0f - (2.0f * (y2 + x2)), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -322,7 +322,7 @@ Matrix Matrix::CreateRotation(Vector3 rotation)
 	Matrix y = CreateRotationY(rotation.y);
 	Matrix z = CreateRotationZ(rotation.z);
 
-	return x * y * z;
+	return z * x * y;
 }
 
 Matrix Matrix::CreateScale(float scale)

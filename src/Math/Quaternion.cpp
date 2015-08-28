@@ -32,9 +32,10 @@ x(v.x), y(v.y), z(v.z), w(v.w)
 
 Quaternion Quaternion::CreateFromAxisAngle(Vector3 axis, float angle)
 {
+	axis.Normalize();
 	float half = DegreesToRadians(angle) * 0.5f;
-	float sin = sinf(DegreesToRadians(half));
-	float cos = cosf(DegreesToRadians(half));
+	float sin = sinf(half);
+	float cos = cosf(half);
 	return Quaternion(axis.x * sin, axis.y * sin, axis.z * sin, cos);
 }
 
@@ -54,7 +55,7 @@ Quaternion Quaternion::CreateFromRotationMatrix(Matrix m)
 		q.y = (m.m31 - m.m13) * sqrt;
 		q.z = (m.m12 - m.m21) * sqrt;
 
-		return q;
+		return q.Normalized();
 	}
 	else if ((m.m11 >= m.m22) && (m.m11 <= m.m33))
 	{
@@ -66,7 +67,7 @@ Quaternion Quaternion::CreateFromRotationMatrix(Matrix m)
 		q.z = (m.m13 + m.m31) * half;
 		q.w = (m.m23 - m.m32) * half;
 
-		return q;
+		return q.Normalized();
 	}
 	else if (m.m22 > m.m33)
 	{
@@ -78,7 +79,7 @@ Quaternion Quaternion::CreateFromRotationMatrix(Matrix m)
 		q.z = (m.m32 + m.m23) * half;
 		q.w = (m.m31 - m.m13) * half;
 
-		return q;
+		return q.Normalized();
 	}
 	else
 	{
@@ -90,28 +91,34 @@ Quaternion Quaternion::CreateFromRotationMatrix(Matrix m)
 		q.z = 0.5f * sqrt;
 		q.w = (m.m12 - m.m21) * half;
 
-		return q;
+		return q.Normalized();
 	}
 }
 
 Quaternion Quaternion::CreateFromEulerAngles(Vector3 v)
 {
-	float y = DegreesToRadians(v.y * 0.5f);
-	float x = DegreesToRadians(v.x * 0.5f);
-	float z = DegreesToRadians(v.z * 0.5f);
+	float y = DegreesToRadians(v.y) * 0.5f;
+	float x = DegreesToRadians(v.x) * 0.5f;
+	float z = DegreesToRadians(v.z) * 0.5f;
 	
-	float siny = sinf(DegreesToRadians(y));
-	float cosy = cosf(DegreesToRadians(y));
-	float sinx = sinf(DegreesToRadians(x));
-	float cosx = cosf(DegreesToRadians(x));
-	float sinz = sinf(DegreesToRadians(z));
-	float cosz = cosf(DegreesToRadians(z));
+	float siny = sinf(y);
+	float cosy = cosf(y);
+	float sinx = sinf(x);
+	float cosx = cosf(x);
+	float sinz = sinf(z);
+	float cosz = cosf(z);
 
 	return Quaternion(
 		(cosy * sinx * cosz) + (siny * cosx * sinz),
 		(siny * cosx * cosz) - (cosy * sinx * sinz),
 		(cosy * cosx * sinz) - (siny * sinx * cosz),
-		(cosy * cosx * cosz) + (siny * sinx * sinz));
+		(cosy * cosx * cosz) + (siny * sinx * sinz)).Normalized();
+}
+
+Quaternion Quaternion::Normalized()
+{
+	float denom = 1.0f / sqrtf((x*x) + (y*y) + (z*z) + (w*w));
+	return Quaternion(x * denom, y * denom, z * denom, w * denom);
 }
 
 float Quaternion::Magnitude()
@@ -170,9 +177,11 @@ Quaternion Quaternion::operator-()
 
 Quaternion operator*(const Quaternion& l, const Quaternion& r)
 {
-	Vector3 vl = Vector3(l.x, l.y, l.z);
-	Vector3 vr = Vector3(r.x, r.y, r.z);
-	return Quaternion(l.w*vr + r.w*vl + Vector3::Cross(vl, vr), l.w * r.w - Vector3::Dot(vl, vr));
+	float x = (l.w*r.x + l.x*r.w + l.y*r.z - l.z*r.y);
+	float y = (l.w*r.y - l.x*r.z + l.y*r.w + l.z*r.x);
+	float z = (l.w*r.z + l.x*r.y - l.y*r.x + l.z*r.w);
+	float w = (l.w*r.w - l.x*r.x - l.y*r.y - l.z*r.z);
+	return Quaternion(x, y, z, w);
 }
 
 NS_END

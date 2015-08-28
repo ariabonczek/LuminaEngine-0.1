@@ -32,9 +32,7 @@ void Transform::Translate(Vector3 v)
 
 void Transform::Rotate(Quaternion rotation)
 {
-	Matrix r = Matrix::CreateFromQuaternion(rotation);
-
-	localRotation = localRotation + rotation;
+	localRotation = (rotation * localRotation);
 	UpdateWorldMatrix();
 	if (Camera* c = gameObject->GetComponent<Camera>()){ c->UpdateViewMatrix(); }
 }
@@ -63,7 +61,7 @@ Quaternion Transform::GetWorldRotation()
 	if (IsBatman()) return localRotation;
 	else
 	{
-		return localRotation + GetParentTransform()->GetWorldRotation();
+		return localRotation * GetParentTransform()->GetWorldRotation();
 	}
 }
 

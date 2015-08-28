@@ -10,7 +10,7 @@
 #define WINDOW_HEIGHT 720
 #define WINDOW_TITLE "Lumina Engine"
 
-#define ENABLE_VSYNC false
+#define ENABLE_VSYNC true
 
 #define PER_FRAME_SLOT 0
 #define PER_MATERIAL_SLOT 1

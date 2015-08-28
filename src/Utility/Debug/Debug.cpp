@@ -58,7 +58,7 @@ void Debug::Log(Matrix m)
 	Log(std::to_string(m.m11) + " " + std::to_string(m.m12) + " " + std::to_string(m.m13) + " " + std::to_string(m.m14));
 	Log(std::to_string(m.m21) + " " + std::to_string(m.m22) + " " + std::to_string(m.m23) + " " + std::to_string(m.m24));
 	Log(std::to_string(m.m31) + " " + std::to_string(m.m32) + " " + std::to_string(m.m33) + " " + std::to_string(m.m34));
-	Log(std::to_string(m.m41) + " " + std::to_string(m.m42) + " " + std::to_string(m.m43) + " " + std::to_string(m.m34));
+	Log(std::to_string(m.m41) + " " + std::to_string(m.m42) + " " + std::to_string(m.m43) + " " + std::to_string(m.m44));
 }
 
 void Debug::LogError(std::string s)

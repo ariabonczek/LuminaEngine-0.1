@@ -2,10 +2,9 @@
 #define QUATERNION_HPP
 
 #include "../Config.hpp"
+#include "Vector.hpp"
 
 NS_BEGIN
-
-struct Vector3;
 
 struct Quaternion
 {
@@ -24,6 +23,7 @@ struct Quaternion
 	//
 	// Member Functions
 	//
+	Quaternion Normalized();
 	float Magnitude();
 	Quaternion Inverse();
 

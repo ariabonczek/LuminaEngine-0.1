@@ -33,6 +33,20 @@ bool Renderer::Initialize()
 #endif
 		return false;
 	}
+	float x = 32.0f;
+	float y = 45.0f;
+	float z = 0.0f;
+	Matrix m1 = Matrix::CreateRotation(Vector3(x, 0.0f, 0.0f));
+	Matrix m2 = Matrix::CreateRotation(Vector3(0.0f, y, 0.0f));
+	Matrix m = m1*m2;
+
+	Matrix q1 = Matrix::CreateFromQuaternion(Quaternion::CreateFromEulerAngles(Vector3(x, 0.0f, 0.0f)));
+	Matrix q2 = Matrix::CreateFromQuaternion(Quaternion::CreateFromEulerAngles(Vector3(0.0f, y, 0.0f)));
+	Matrix q = q1*q2;
+
+	Debug::Log(m);
+	Debug::Log("");
+	Debug::Log(q);
 	return true;
 }
 
