@@ -188,7 +188,11 @@ Resource* ResourceManager::CheckResourceCollection(std::string s)
 Resource* ResourceManager::LoadTexture2D(std::string filepath)
 {
 	Image image;
-	image.data = stbi_load(filepath.c_str(), &image.width, &image.height, &image.components, 0);
+	int width, height, components;
+	image.data = stbi_load(filepath.c_str(), &width, &height, &components, 0);
+	image.width = width;
+	image.height = height;
+	image.components = components;
 
 	// This may not work as intended
 	if (image.data == NULL)

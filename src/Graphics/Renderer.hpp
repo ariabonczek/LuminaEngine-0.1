@@ -29,6 +29,12 @@ struct PerFrameData
 	float elapsedTime;
 };
 
+struct MiscData
+{
+	float specularPower;
+	float pad[3];
+};
+
 struct PerObjectData
 {
 	Matrix world;
@@ -68,6 +74,7 @@ struct SLightData
 
 struct LightData
 {
+	Color ambientLight;
 	DLightData dLightData[NUM_DIRECTIONAL_LIGHTS];
 	PLightData pLightData[NUM_POINT_LIGHTS];
 	SLightData sLightData[NUM_SPOT_LIGHTS];
@@ -106,7 +113,8 @@ private:
 	static PerFrameData perFrameData;
 	static ID3D11Buffer* perFrameBuffer;
 
-	static ID3D11Buffer* perMaterialBuffer;
+	static MiscData miscData;
+	static ID3D11Buffer* miscBuffer;
 
 	static PerObjectData perObjectData;
 	static ID3D11Buffer* perObjectBuffer;

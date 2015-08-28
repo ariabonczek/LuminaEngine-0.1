@@ -12,10 +12,12 @@ NS_BEGIN
 Material* Material::Default;
 
 Material::Material(Shader* shader):
-shader(shader)
+shader(shader),
+specularPower()
 {}
 
-Material::Material(Material* material)
+Material::Material(Material* material):
+specularPower()
 {
 	shader = material->shader;
 }
@@ -63,6 +65,16 @@ void Material::Initialize()
 void Material::ShutdownStatic()
 {
 	delete Default;
+}
+
+void Material::SetSpecularPower(float power)
+{
+	specularPower = power;
+}
+
+float Material::GetSpecularPower()const
+{
+	return specularPower;
 }
 
 template<typename T>

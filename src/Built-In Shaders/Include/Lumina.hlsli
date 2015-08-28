@@ -16,12 +16,18 @@ cbuffer perObject : register(b2)
 
 cbuffer lighting : register(b3)
 {
+	float4 ambientLight;
 	DirectionalLight dLight[1];
 	PointLight		 pLight[1];
 	SpotLight        sLight[1];
 	uint numDL;
 	uint numPL;
 	uint numSL;
+}
+
+cbuffer perMaterial : register(b5)
+{
+	float specularPower;
 }
 
 struct MeshVertexInput

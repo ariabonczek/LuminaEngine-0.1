@@ -10,7 +10,7 @@ MeshVertexOutput main( MeshVertexInput v )
 	o.worldpos = mul(float4(v.position, 1.0), world).xyz;
 	o.color = v.color;
 	o.texcoord = v.texcoord;
-	o.normal = v.normal;
+	o.normal = mul(v.normal, (float3x3)worldInverseTranspose);
 	o.tangent = v.tangent;
 
 	return o;

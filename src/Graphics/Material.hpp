@@ -23,6 +23,9 @@ public:
 	static void ShutdownStatic();
 	#pragma endregion
 
+	void SetSpecularPower(float power);
+	float GetSpecularPower()const;
+
 	/// <summary>
 	/// Sets the value of the given property to the given value
 	/// </summary>
@@ -42,6 +45,8 @@ private:
 	ID3D11Buffer* propertyBuffer;
 
 	Shader* shader;
+
+	float specularPower;
 };
 
 NS_END

@@ -2,7 +2,8 @@
 
 NS_BEGIN
 
-Scene::Scene()
+Scene::Scene():
+ambientLight(0.1f, 0.1f, 0.1f, 1.0f)
 {}
 
 Scene::~Scene()

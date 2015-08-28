@@ -34,11 +34,117 @@ struct SpotLight
 	bool   hasShadows;
 };
 
+///
+// Forward Rendering
+///
+
 // Blinn-Phong rendering
+float4 CalculateLighting(DirectionalLight dLight, float3 normal, float3 view, float specularPower)
+{
+	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
+	float3 lightVector = -dLight.direction;
 
+	float diffusefactor = dot(lightVector, normal);
+	diffusefactor = max(0.0f, diffusefactor);
+		return float4(diffusefactor, diffusefactor, diffusefactor, 1.0);
+		diffuse = float4((dLight.color * dLight.intensity * diffusefactor).rgb, 1.0f);
+		float3 v = normalize(reflect(lightVector, normal));
+		float specularfactor = dot(view, v);
 
+		if (specularfactor > 0)
+		{
+			specularfactor = pow(specularfactor, specularPower);
+			specular = float4((dLight.color * dLight.intensity * specularfactor).rgb, 1.0f);
+		}
+	
+	return diffuse + specular;
+}
+
+float4 CalculateLighting(PointLight pLight, float3 pos, float3 normal, float3 view, float specularPower)
+{
+	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	float3 lightVector = pLight.position - pos;
+	float d = length(lightVector);
+	if (d > pLight.range)
+		return diffuse;
+	lightVector /= d;
+
+	float diffusefactor = dot(lightVector, normal);
+	if (diffusefactor > 0)
+	{
+		diffuse = float4((pLight.color * pLight.intensity * diffusefactor).rgb, 1.0f);
+		float3 v = normalize(reflect(lightVector, normal));
+		float specularfactor = dot(view, v);
+
+		if (specularfactor > 0)
+		{
+			specularfactor = pow(specularfactor, specularPower);
+			specular = float4((pLight.color * pLight.intensity * specularfactor).rgb, 1.0f);
+		}
+	}
+	// 0.01 represents the minimum percentage of light before attenuation turns to black
+	float attenuation = 1.0f / (d*d * 0.01) ;
+	diffuse *= attenuation;
+	specular *= attenuation;
+	return diffuse + specular;
+}
+
+float4 CalculateLighting(SpotLight sLight, float3 pos, float3 normal, float3 view, float specularPower)
+{
+	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	float3 lightVector = sLight.position - pos;
+	float d = length(lightVector);
+	if (d > sLight.range)
+		return diffuse;
+	lightVector /= d;
+
+	float diffusefactor = dot(lightVector, normal);
+	if (diffusefactor > 0)
+	{
+	 diffuse = float4((sLight.color * sLight.intensity * diffusefactor).rgb, 1.0f);
+		float3 v = normalize(reflect(lightVector, normal));
+		float specularfactor = dot(view, v);
+
+		if (specularfactor > 0)
+		{
+			specularfactor = pow(specularfactor, specularPower);
+			specular = float4((sLight.color * sLight.intensity * specularfactor).rgb, 1.0f);
+		}
+	}
+	float spot = pow(max(dot(-lightVector, sLight.direction), 0.0f), sLight.spot);
+	float attenuation = spot / (d*d * 0.01);
+	diffuse *= attenuation;
+	specular *= attenuation;
+	return diffuse + specular;
+}
+
+float4 CalculateAllLights(DirectionalLight dLight[1], uint numDL, PointLight pLight[1], uint numPL, SpotLight sLight[1], uint numSL, float3 pos, float3 normal, float3 view, float specularPower)
+{
+	float4 ret = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	for (uint i = 0; i < numDL; i++)
+	{
+		ret += CalculateLighting(dLight[i], normal, view, specularPower);
+	}
+	for (uint i = 0; i < numPL; i++)
+	{
+		ret += CalculateLighting(pLight[i], pos, normal, view, specularPower);
+	}
+	for (uint i = 0; i < numSL; i++)
+	{
+		ret += CalculateLighting(sLight[i], pos, normal, view, specularPower);
+	}
+	return ret;
+}
+
+///
 // Physically based rendering
+///
 
 float NormalDistribution(float roughness, float3 normal, float3 halfvector)
 {
@@ -47,7 +153,7 @@ float NormalDistribution(float roughness, float3 normal, float3 halfvector)
 	float ndotd = dot(normal, halfvector);
 	float denom = ((ndotd*ndotd) * (alpha2 - 1) + 1);
 
-	return alpha2 / 3.141592 * denom*denom;
+	return alpha2 / denom*denom;
 }
 
 float GaussianFresnelReflectance(float metalness, float3 viewvector, float3 halfvector)
@@ -78,20 +184,15 @@ float CookTorrenceMicrofacetSpecular(float roughness, float metalness, float3 no
 		(4 * saturate(dot(normal, lightvector)) * saturate(dot(normal, viewvector)));
 }
 
-float4 LambertianBDRF(float4 cdiff)
-{
-	return cdiff / 3.141592;
-}
 
 // Ideally, support multiple lighting models here
-float4 PBRCalculateFinalColor(float4 albedo, float3 normal, float roughness, float metalness, float3 viewvector, DirectionalLight dLight)
+float4 PBRCalculateFinalColor(float4 diffuse, float3 normal, float roughness, float metalness, float3 viewvector, DirectionalLight dLight)
 {
 	float3 halfvector = normalize(-dLight.direction + viewvector);
 
-	float4 diffuse = LambertianBDRF(albedo);
 	float4 specular = CookTorrenceMicrofacetSpecular(roughness, metalness, normal, viewvector, halfvector, -dLight.direction);
 	
-	return float4(3.141592 * (diffuse + specular).rgb * (dLight.color.rgb * dLight.intensity * dot(normal, -dLight.direction)).rgb , 1.0);
+	return float4((diffuse + specular).rgb * (dLight.color.rgb * dLight.intensity * dot(normal, -dLight.direction)).rgb , 1.0);
 }
 
 #endif

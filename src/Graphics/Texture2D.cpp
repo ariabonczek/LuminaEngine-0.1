@@ -104,7 +104,7 @@ sampler(sampler)
 				temp.get()[i * 4 + j] = imageData.data[i * 3 + j];
 			}
 			// set alpha to 1
-			temp.get()[i * 4 + 3] = 1.0f;
+			temp.get()[i * 4 + 3] = 1;
 		}
 	}
 

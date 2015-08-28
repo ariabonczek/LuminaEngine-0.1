@@ -37,6 +37,8 @@ public:
 protected:
 	void AddObject(GameObject* obj);
 
+	Color ambientLight;
+
 	Camera* activeCamera;
 	std::vector<GameObject*> objs;
 	std::vector<Light*> lights;

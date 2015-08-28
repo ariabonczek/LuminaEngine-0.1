@@ -11,7 +11,8 @@ ID3D11InputLayout* Renderer::inputLayout;
 
 PerFrameData Renderer::perFrameData;
 ID3D11Buffer* Renderer::perFrameBuffer;
-ID3D11Buffer* Renderer::perMaterialBuffer;
+MiscData Renderer::miscData;
+ID3D11Buffer* Renderer::miscBuffer;
 PerObjectData Renderer::perObjectData;
 ID3D11Buffer* Renderer::perObjectBuffer;
 LightData Renderer::lightData;
@@ -33,20 +34,7 @@ bool Renderer::Initialize()
 #endif
 		return false;
 	}
-	float x = 32.0f;
-	float y = 45.0f;
-	float z = 0.0f;
-	Matrix m1 = Matrix::CreateRotation(Vector3(x, 0.0f, 0.0f));
-	Matrix m2 = Matrix::CreateRotation(Vector3(0.0f, y, 0.0f));
-	Matrix m = m1*m2;
 
-	Matrix q1 = Matrix::CreateFromQuaternion(Quaternion::CreateFromEulerAngles(Vector3(x, 0.0f, 0.0f)));
-	Matrix q2 = Matrix::CreateFromQuaternion(Quaternion::CreateFromEulerAngles(Vector3(0.0f, y, 0.0f)));
-	Matrix q = q1*q2;
-
-	Debug::Log(m);
-	Debug::Log("");
-	Debug::Log(q);
 	return true;
 }
 
@@ -78,13 +66,16 @@ bool Renderer::InitializePipeline()
 	bd.ByteWidth = sizeof(perFrameData);
 	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &perFrameBuffer);
 
+	bd.ByteWidth = sizeof(miscData);	
+	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &miscBuffer);
+
 	bd.ByteWidth = sizeof(perObjectData);
 	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &perObjectBuffer);
 
 	bd.ByteWidth = sizeof(lightData);
 	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &lightingBuffer);
 
-	// TODO: Consolidate these into less calls? 
+	// TODO: Consolidate these into less calls
 
 	GraphicsDevice::GetDeviceContext()->VSSetConstantBuffers(PER_FRAME_SLOT, 1, &perFrameBuffer);
 	GraphicsDevice::GetDeviceContext()->PSSetConstantBuffers(PER_FRAME_SLOT, 1, &perFrameBuffer);
@@ -92,6 +83,8 @@ bool Renderer::InitializePipeline()
 	GraphicsDevice::GetDeviceContext()->VSSetConstantBuffers(PER_OBJECT_SLOT, 1, &perObjectBuffer);
 
 	GraphicsDevice::GetDeviceContext()->PSSetConstantBuffers(LIGHTING_SLOT, 1, &lightingBuffer);
+
+	GraphicsDevice::GetDeviceContext()->PSSetConstantBuffers(MISC_SLOT, 1, &miscBuffer);
 
 	return true;
 }
@@ -102,6 +95,8 @@ bool Renderer::InitializeScene(Scene& scene)
 	{
 		obj->Initialize();
 	}
+
+	lightData.ambientLight = scene.ambientLight;
 
 	// TODO: THIS IS AWFUL
 	for (Light* l : scene.lights)
@@ -175,7 +170,7 @@ void Renderer::Shutdown()
 	DELETECOM(inputLayout);
 	DELETECOM(perFrameBuffer);
 	DELETECOM(perObjectBuffer);
-	DELETECOM(perMaterialBuffer);
+	DELETECOM(miscBuffer);
 	DELETECOM(lightingBuffer);
 	DELETECOM(shadowBuffer);
 }
@@ -220,6 +215,8 @@ void Renderer::UpdateMaterialData(GameObject* obj)
 	if (Material* cache = obj->GetComponent<Material>())
 	{
 		cache->Bind();
+		miscData.specularPower = cache->GetSpecularPower();
+		GraphicsDevice::GetDeviceContext()->UpdateSubresource(miscBuffer, 0, NULL, &miscData, 0, 0);
 	}	
 }
 
@@ -227,6 +224,7 @@ void Renderer::UpdateObjectData(GameObject* obj)
 {
 	Transform* cache = obj->GetComponent<Transform>();
 	perObjectData.world = Matrix::Transpose(cache->GetWorldMatrix());
+	// TODO: This transposes the transpose of the inverse... this is obnoxious
 	perObjectData.worldInverseTranspose = Matrix::Transpose(cache->GetWorldInverseTranspose());
 	GraphicsDevice::GetDeviceContext()->UpdateSubresource(perObjectBuffer, 0, NULL, &perObjectData, 0, 0);
 }

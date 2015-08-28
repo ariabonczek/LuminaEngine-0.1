@@ -17,6 +17,8 @@
 #define PER_OBJECT_SLOT 2
 #define LIGHTING_SLOT 3
 #define SHADOWS_SLOT 4
+#define MISC_SLOT 5 // TODO: Find a better way to do this
+
 
 #define NUM_DIRECTIONAL_LIGHTS 1
 #define NUM_POINT_LIGHTS 1

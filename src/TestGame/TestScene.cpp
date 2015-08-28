@@ -5,6 +5,7 @@ void MoveCamera(Transform* t, float d);
 void TestScene::LoadResources()
 {
 	// TODO: Add a 'CreateGameObject' method to scene to handle behind the scenes
+	ambientLight = Color(0.2f, 0.2f, 0.2f, 1.0f);
 
 	GameObject* cam = new GameObject("Camera");
 	cam->AddComponent<Camera>(new Camera());
@@ -13,18 +14,28 @@ void TestScene::LoadResources()
 	AddObject(cam);
 
 	Material* mat = new Material(Shader::Default);
-	mat->SetPropertyValue<Texture2D>("diffuse", ResourceManager::LoadResource<Texture2D>("Textures/brick.jpg"));
+	mat->SetPropertyValue<Texture2D>("diffuse", ResourceManager::LoadResource<Texture2D>("Textures/brick_diff.jpg"));
+	mat->SetPropertyValue<Texture2D>("normal", ResourceManager::LoadResource<Texture2D>("Textures/brick_nor.jpg"));
 	
 	mat->SetPropertyValue<Color>("tint", Color::White);
 	mat->SetPropertyValue<float>("roughness", 1.0f);
 	mat->SetPropertyValue<float>("metalness", 1.0f);
 
-	DirectionalLight* dLight = new DirectionalLight(Color::White, 1.0f);
+	mat->SetSpecularPower(32.0f);
+
+	GameObject* light = new GameObject("DirectionalLight");
+	light->AddComponent<Light>(new DirectionalLight(Color::White, 1.0f));
+	light->GetTransform()->Rotate(Quaternion::CreateFromEulerAngles(Vector3(45.0f, 45.0f, 0.0f)));
+	AddObject(light);
+
+	GameObject* pLight = new GameObject("PointLight");
+	pLight->AddComponent<Light>(new PointLight(Color::White, 1.0f, 10.0f));
+	pLight->GetTransform()->SetLocalPosition(Vector3(5.0f, 0.0f, 0.0f));
+	AddObject(pLight);
 
 	GameObject* texturedObj = new GameObject("Cube");
 	texturedObj->AddComponent<Material>(mat);
 	texturedObj->AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(CubeMesh)));
-	texturedObj->AddComponent<Light>(dLight);
 	AddObject(texturedObj);
 
 	GameObject* plane = new GameObject("Plane");
@@ -46,7 +57,7 @@ void TestScene::Update(float dt)
 	{
 		if (p->GetName() == "Cube")
 		{
-			p->GetTransform()->Rotate(Quaternion::CreateFromEulerAngles(Vector3(0.0f, 1.67f, 0.0f)));
+			p->GetTransform()->Rotate(Quaternion::CreateFromEulerAngles(Vector3(0.0f, 0.5f, 0.0f)));
 		}
 		p->Update();
 	}

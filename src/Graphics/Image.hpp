@@ -11,9 +11,9 @@ NS_BEGIN
 struct Image
 {
 	unsigned char* data;
-	int width;
-	int height;
-	int components;
+	uint width;
+	uint height;
+	uint components;
 };
 
 NS_END
