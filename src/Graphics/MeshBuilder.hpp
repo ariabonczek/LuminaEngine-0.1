@@ -31,10 +31,12 @@ private:
 	static MeshData CreatePlane(float width = 10.0f, float depth = 10.0f, UINT n = 2, UINT m = 2);
 	static MeshData CreateCube(float width = 1.0f, float depth = 1.0f, float height = 1.0f);
 	static MeshData CreateSphere(float radius = 1.0f, UINT numSubdivisons = 2);
+	static MeshData CreateOctahedron(float radius = 1.0f, UINT numSubdivision = 0);
 	static MeshData CreateCone();
 	static MeshData CreateCylinder();
 
 	static void Subdivide(MeshData& data);
+	static void SubdivideOct(MeshData& data);	
 };
 
 NS_END

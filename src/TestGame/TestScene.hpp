@@ -11,6 +11,9 @@ public:
 	void UnloadResources();
 	void Update(float dt);
 private:
+	Quaternion q1;
+	Quaternion q2;
+	float t;
 };
 
 #endif

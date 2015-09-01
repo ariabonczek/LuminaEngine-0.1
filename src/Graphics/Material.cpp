@@ -12,14 +12,15 @@ NS_BEGIN
 Material* Material::Default;
 
 Material::Material(Shader* shader):
-shader(shader),
 specularPower()
-{}
+{
+	this->shader = new Shader(*shader);
+}
 
 Material::Material(Material* material):
 specularPower()
 {
-	shader = material->shader;
+	shader = new Shader(*material->shader);
 }
 
 Material::~Material()
@@ -209,6 +210,8 @@ void Material::SetTextures()
 void Material::UpdateAndSetBuffer()
 {
 	float* fp = &shader->data[0];
+
+	// TODO: Check to see which shaders are enabled
 
 	GraphicsDevice::GetDeviceContext()->UpdateSubresource(propertyBuffer, 0, 0, fp, 0, 0);
 

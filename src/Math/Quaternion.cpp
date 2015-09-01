@@ -115,6 +115,50 @@ Quaternion Quaternion::CreateFromEulerAngles(Vector3 v)
 		(cosy * cosx * cosz) + (siny * sinx * sinz)).Normalized();
 }
 
+Quaternion Quaternion::Lerp(Quaternion q1, Quaternion q2, float t)
+{
+	float inv = 1.0f - t;
+	Quaternion ret;
+	float mult = q1.x*q2.x + q1.y*q2.y + q1.z*q2.z + q1.w*q2.w;
+	if (mult > 0.0f)
+	{
+		ret = Quaternion(inv*q1.x + t*q2.x, inv*q1.y + t*q2.y, inv*q1.z + t*q2.z, inv*q1.w + t*q2.w);
+	}
+	else
+	{
+		ret = Quaternion(inv*q1.x - t*q2.x, inv*q1.y - t*q2.y, inv*q1.z - t*q2.z, inv*q1.w - t*q2.w);
+	}
+
+	return ret.Normalized();
+}
+
+Quaternion Quaternion::Slerp(Quaternion q1, Quaternion q2, float t)
+{
+	float inv;
+	float sign;
+
+	float mult = q1.x*q2.x + q1.y*q2.y + q1.z*q2.z + q1.w*q2.w;
+	bool flag = false;
+	if (mult < 0.0f)
+	{
+		flag = true;
+	}
+	if (mult > 0.99999f)
+	{
+		inv = 1.0f - t;
+		sign = flag ? -t : t;
+	}
+	else
+	{
+		float acos = acosf(mult);
+		float invsin = 1.0f / sinf(acos);
+		inv = sinf((1.0f - t) * acos) * invsin;
+		sign = flag ? -sinf(t * acos) * invsin : sinf(t * acos) * invsin;
+	}
+
+	return Quaternion(inv*q1.x + sign*q2.x, inv*q1.y + sign*q2.y, inv*q1.z + sign*q2.z, inv*q1.w + sign*q2.w);
+}
+
 Quaternion Quaternion::Normalized()
 {
 	float denom = 1.0f / sqrtf((x*x) + (y*y) + (z*z) + (w*w));

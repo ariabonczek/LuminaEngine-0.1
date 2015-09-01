@@ -10,7 +10,6 @@ Cube::Cube() :
 GameObject()
 {
 	AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(CubeMesh)));
-	AddComponent<Material>(new Material(Material::Default));
 }
 
 Cube::~Cube()

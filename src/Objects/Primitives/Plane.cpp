@@ -10,7 +10,6 @@ Plane::Plane():
 GameObject()
 {
 	AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(PlaneMesh)));
-	AddComponent<Material>(new Material(Material::Default));
 }
 
 Plane::~Plane()

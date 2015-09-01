@@ -10,7 +10,7 @@ NS_BEGIN
 
 class GraphicsDevice;
 
-enum TextureFormat
+enum class TextureFormat
 {
 	Greyscale,
 	RGB,

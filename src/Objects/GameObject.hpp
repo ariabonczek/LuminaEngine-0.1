@@ -64,20 +64,15 @@ public:
 	/// </summary>
 	Transform* GetTransform();
 
-	GameObject* GetParent()const;
-	std::vector<GameObject*> GetChildren()const;
+	std::string GetName()const;
 	#pragma endregion
 
-	std::string GetName()const;
 
 protected:
 	void InitializeComponentMap();
 	void OnPositionChange();
 
 	std::string name;
-
-	GameObject* parent;
-	std::vector<GameObject*> children;
 	
 	std::map<std::string, Component*> components;
 

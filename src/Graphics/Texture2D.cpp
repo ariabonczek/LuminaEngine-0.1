@@ -57,7 +57,6 @@ sampler(sampler)
 
 	ID3D11Texture2D* texture;
 	HRESULT hr;
-
 	// Create the texture
 
 	D3D11_TEXTURE2D_DESC td;
@@ -91,17 +90,36 @@ sampler(sampler)
 	// May want to put this in a different function i.e. CopyPixels
 	if (imageData.components == 4)
 	{
+		format = TextureFormat::RGBA;
 		std::memcpy(temp.get(), imageData.data, imagesize * sizeof(uint8_t));
 	}
 	else if (imageData.components == 3)
 	{
+		format = TextureFormat::RGB;
+
 		// foreach pixel
-		for (ULONG i = 0; i < imageData.width * imageData.height; i++)
+		for (uint i = 0; i < imageData.width * imageData.height; i++)
 		{
 			// copy the rgb
-			for (int j = 0; j < 3; j++)
+			for (uint j = 0; j < 3; j++)
 			{
 				temp.get()[i * 4 + j] = imageData.data[i * 3 + j];
+			}
+			// set alpha to 1
+			temp.get()[i * 4 + 3] = 1;
+		}
+	}
+	else if (imageData.components == 1)
+	{
+		format = TextureFormat::Greyscale;
+
+		// foreach pixel
+		for (uint i = 0; i < imageData.width * imageData.height; i++)
+		{
+			// copy the rgb
+			for (uint j = 0; j < 3; j++)
+			{
+				temp.get()[i * 4 + j] = imageData.data[i];
 			}
 			// set alpha to 1
 			temp.get()[i * 4 + 3] = 1;

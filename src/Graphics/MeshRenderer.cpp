@@ -2,12 +2,14 @@
 
 #include "Vertex.hpp"
 #include "Mesh.hpp"
+#include "Material.hpp"
 #include "GraphicsDevice.hpp"
 
 NS_BEGIN
 
-MeshRenderer::MeshRenderer(Mesh* mesh):
+MeshRenderer::MeshRenderer(Mesh* mesh, Material* mat):
 mesh(mesh),
+mat(mat),
 stride(sizeof(MeshVertex)),
 offset(0)
 {
@@ -21,6 +23,13 @@ offset(0)
 	{
 		std::vector<MeshVertex> verts = mesh->GetVertices();
 		std::vector<UINT> inds = mesh->GetIndices();
+
+		if (verts.size() == 0)
+		{
+#if DEBUG
+			Debug::LogError("[MeshRenderer] Initialized with a mesh with 0 vertices!");
+#endif
+		}
 
 		MeshVertex* vertices = &verts[0];
 		UINT* indices = &inds[0];
@@ -54,10 +63,10 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Initialize()
 {
-
+	mat->Initialize();
 }
 
-void MeshRenderer::Bind()
+void MeshRenderer::BindMesh()
 {
 	if (vertexBuffer)
 	{
@@ -67,6 +76,16 @@ void MeshRenderer::Bind()
 	{
 		GraphicsDevice::GetDeviceContext()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	}
+}
+
+void MeshRenderer::BindMaterial()
+{
+	mat->Bind();
+}
+
+void MeshRenderer::SetMaterial(Material* material)
+{
+	mat = material;
 }
 
 void MeshRenderer::Draw()

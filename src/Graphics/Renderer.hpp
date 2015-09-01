@@ -29,12 +29,6 @@ struct PerFrameData
 	float elapsedTime;
 };
 
-struct MiscData
-{
-	float specularPower;
-	float pad[3];
-};
-
 struct PerObjectData
 {
 	Matrix world;
@@ -112,9 +106,6 @@ private:
 
 	static PerFrameData perFrameData;
 	static ID3D11Buffer* perFrameBuffer;
-
-	static MiscData miscData;
-	static ID3D11Buffer* miscBuffer;
 
 	static PerObjectData perObjectData;
 	static ID3D11Buffer* perObjectBuffer;

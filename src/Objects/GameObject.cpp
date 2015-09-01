@@ -11,12 +11,10 @@
 NS_BEGIN
 
 GameObject::GameObject(std::string name):
-parent(nullptr),
 isStatic(false), 
 isDestroyed(false),
 name(name)
 {
-	children.reserve(10);
 	InitializeComponentMap();
 }
 
@@ -51,7 +49,6 @@ T* GameObject::GetComponent()
 template Component* GameObject::GetComponent<Component>();
 template Light* GameObject::GetComponent<Light>();
 template Transform* GameObject::GetComponent<Transform>();
-template Material* GameObject::GetComponent<Material>();
 template MeshRenderer* GameObject::GetComponent<MeshRenderer>();
 template Camera* GameObject::GetComponent<Camera>();
 
@@ -95,14 +92,12 @@ void GameObject::AddComponent(T* component)
 }
 
 template void GameObject::AddComponent<Component>(Component* component);
-template void GameObject::AddComponent<Material>(Material* material);
 template void GameObject::AddComponent<Light>(Light* light);
 template void GameObject::AddComponent<DirectionalLight>(DirectionalLight* dLight);
 template void GameObject::AddComponent<SpotLight>(SpotLight* sLight);
 template void GameObject::AddComponent<PointLight>(PointLight* pLight);
 template void GameObject::AddComponent<MeshRenderer>(MeshRenderer* meshRenderer);
 template void GameObject::AddComponent<Camera>(Camera* camera);
-
 
 void GameObject::Destroy()
 {
@@ -123,12 +118,12 @@ void GameObject::Update()
 void GameObject::Render()
 {
 	// TODO: Only call Render on objects that are renderable
-	if (!components["Material"] || !components["MeshRenderer"])
+	if (!components["MeshRenderer"])
 	{
 		return;
 	}
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->Bind();
+	mr->BindMesh();
 	mr->Draw();
 }
 
@@ -147,18 +142,6 @@ Transform* GameObject::GetTransform()
 	return (Transform*)(components["Transform"]);
 }
 
-GameObject* GameObject::GetParent()const
-{
-	// I need an adult
-	return parent;
-}
-
-std::vector<GameObject*> GameObject::GetChildren()const
-{
-	// I AM AN ADULT
-	return children;
-}
-
 std::string GameObject::GetName()const
 {
 	return name;
@@ -170,7 +153,6 @@ void GameObject::InitializeComponentMap()
 	components["Transform"]->OnAddToGameObject(this);
 
 	components["MeshRenderer"] = 0;
-	components["Material"] = 0;
 	components["Camera"] = 0;
 	components["Light"] = 0;
 }

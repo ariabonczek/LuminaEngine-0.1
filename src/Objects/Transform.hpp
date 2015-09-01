@@ -46,6 +46,12 @@ public:
 	Vector3 GetUp()const;
 	Vector3 GetRight()const;
 
+	void SetParent(Transform* transform);
+	void AddChild(Transform* transform);
+
+	Transform* GetParent();
+	std::vector<Transform*> GetChildren();
+
 private:
 	void UpdateWorldMatrix();
 	/// <summary>
@@ -53,13 +59,13 @@ private:
 	/// </summary>
 	bool IsBatman()const;
 
-	Transform* GetParentTransform()const;
+	Transform* parent;
+	std::vector<Transform*> children;
 
 	Vector3 localPosition;
 	Vector3 localScale;
 	Quaternion localRotation;
 	Vector3 eulerAngles;
-
 
 	Vector3 forward;
 	Vector3 up;

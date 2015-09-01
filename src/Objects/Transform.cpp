@@ -12,8 +12,11 @@ localScale(1.0f, 1.0f, 1.0f),
 eulerAngles(0.0f, 0.0f, 0.0f),
 forward(0.0f, 0.0f, 1.0f),
 up(0.0f, 1.0f, 0.0f),
-right(1.0f, 0.0f, 0.0f)
-{}
+right(1.0f, 0.0f, 0.0f),
+parent(nullptr)
+{
+	children.reserve(3);
+}
 
 Transform::~Transform()
 {}
@@ -53,7 +56,7 @@ Vector3 Transform::GetWorldPosition()
 	if (IsBatman()) return localPosition;
 	else
 	{
-		return localPosition + GetParentTransform()->GetWorldPosition();
+		return localPosition + parent->GetWorldPosition();
 	}
 }
 Quaternion Transform::GetWorldRotation()
@@ -61,7 +64,7 @@ Quaternion Transform::GetWorldRotation()
 	if (IsBatman()) return localRotation;
 	else
 	{
-		return localRotation * GetParentTransform()->GetWorldRotation();
+		return localRotation * parent->GetWorldRotation();
 	}
 }
 
@@ -70,7 +73,7 @@ Vector3 Transform::GetWorldScale()
 	if (IsBatman()) return localScale;
 	else
 	{
-		return localScale * GetParentTransform()->GetWorldScale();
+		return localScale * parent->GetWorldScale();
 	} 
 }
 
@@ -79,13 +82,47 @@ Matrix Transform::GetWorldMatrix()const
 	if (IsBatman()) return worldCache;
 	else
 	{
-		return worldCache * GetParentTransform()->GetWorldMatrix();
+		return worldCache * parent->GetWorldMatrix();
 	}
 }
 
 Matrix Transform::GetWorldInverseTranspose()
 {
 	return Matrix::Transpose(Matrix::Inverse(worldCache));
+}
+
+void Transform::SetParent(Transform* transform)
+{
+	if (parent == transform)
+		return;
+
+	// TODO: Make this safe
+	parent = transform;
+	parent->AddChild(this);
+}
+
+void Transform::AddChild(Transform* transform)
+{
+	for(std::vector<Transform*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		if (transform == *it)
+		{
+			return;
+		}
+	}
+
+	transform->SetParent(this);
+	children.push_back(transform);
+}
+
+Transform* Transform::GetParent()
+{
+	return parent;
+}
+
+std::vector<Transform*> Transform::GetChildren()
+{
+	return children;
 }
 
 void Transform::UpdateWorldMatrix()
@@ -99,26 +136,23 @@ void Transform::UpdateWorldMatrix()
 	s = Matrix::CreateScale(worldScale);
 	t = Matrix::CreateTranslation(worldPosition);
 
-	worldCache = t*r*s;
+	worldCache = r*s*t;
 
 	forward = Vector3::Normalize(Vector3::Forward * r);
 	right = Vector3::Normalize(Vector3::Right * r);
 	up = Vector3::Cross(forward, right);
+
+	for (uint i = 0; i < children.size(); i++)
+	{
+		children.at(i)->UpdateWorldMatrix();
+	}
 }
 
 bool Transform::IsBatman()const
 {
-	return !gameObject->GetParent();
-}
-
-Transform* Transform::GetParentTransform()const
-{
-	// Should check IsBatman before calling this
-	if (IsBatman()) return 0;
-	else
-	{
-		return gameObject->GetParent()->GetComponent<Transform>();
-	}
+	if (parent)
+		return false;
+	return true;
 }
 
 Vector3 Transform::GetForward()const

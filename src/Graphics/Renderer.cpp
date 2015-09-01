@@ -11,8 +11,6 @@ ID3D11InputLayout* Renderer::inputLayout;
 
 PerFrameData Renderer::perFrameData;
 ID3D11Buffer* Renderer::perFrameBuffer;
-MiscData Renderer::miscData;
-ID3D11Buffer* Renderer::miscBuffer;
 PerObjectData Renderer::perObjectData;
 ID3D11Buffer* Renderer::perObjectBuffer;
 LightData Renderer::lightData;
@@ -66,9 +64,6 @@ bool Renderer::InitializePipeline()
 	bd.ByteWidth = sizeof(perFrameData);
 	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &perFrameBuffer);
 
-	bd.ByteWidth = sizeof(miscData);	
-	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &miscBuffer);
-
 	bd.ByteWidth = sizeof(perObjectData);
 	GraphicsDevice::GetDevice()->CreateBuffer(&bd, NULL, &perObjectBuffer);
 
@@ -83,9 +78,6 @@ bool Renderer::InitializePipeline()
 	GraphicsDevice::GetDeviceContext()->VSSetConstantBuffers(PER_OBJECT_SLOT, 1, &perObjectBuffer);
 
 	GraphicsDevice::GetDeviceContext()->PSSetConstantBuffers(LIGHTING_SLOT, 1, &lightingBuffer);
-
-	GraphicsDevice::GetDeviceContext()->PSSetConstantBuffers(MISC_SLOT, 1, &miscBuffer);
-
 	return true;
 }
 
@@ -170,7 +162,6 @@ void Renderer::Shutdown()
 	DELETECOM(inputLayout);
 	DELETECOM(perFrameBuffer);
 	DELETECOM(perObjectBuffer);
-	DELETECOM(miscBuffer);
 	DELETECOM(lightingBuffer);
 	DELETECOM(shadowBuffer);
 }
@@ -212,12 +203,10 @@ void Renderer::UpdateFrameData(const Scene& scene)
 
 void Renderer::UpdateMaterialData(GameObject* obj)
 {
-	if (Material* cache = obj->GetComponent<Material>())
+	if (MeshRenderer* mr = obj->GetComponent<MeshRenderer>())
 	{
-		cache->Bind();
-		miscData.specularPower = cache->GetSpecularPower();
-		GraphicsDevice::GetDeviceContext()->UpdateSubresource(miscBuffer, 0, NULL, &miscData, 0, 0);
-	}	
+		mr->BindMaterial();
+	}
 }
 
 void Renderer::UpdateObjectData(GameObject* obj)

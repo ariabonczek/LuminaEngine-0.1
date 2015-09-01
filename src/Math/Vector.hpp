@@ -155,6 +155,8 @@ struct Vector3
 	void Normalize();
 	Vector3 Normalized();
 
+	void SetMagnitude(float mag);
+
 	///////////////
 	// Operators //
 	///////////////

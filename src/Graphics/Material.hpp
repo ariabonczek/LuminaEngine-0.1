@@ -8,7 +8,7 @@
 
 NS_BEGIN
 
-class Material : Component
+class Material
 {
 public:
 	Material(Shader* shader);

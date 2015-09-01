@@ -4,45 +4,44 @@ void MoveCamera(Transform* t, float d);
 
 void TestScene::LoadResources()
 {
+	q1 = Quaternion::CreateFromEulerAngles(Vector3(0.0f, 0.0f, 0.0f));
+	q2 = Quaternion::CreateFromEulerAngles(Vector3(0.0f, 180.0f, 0.0f));
+	t = 0.0f;
+
 	// TODO: Add a 'CreateGameObject' method to scene to handle behind the scenes
 	ambientLight = Color(0.2f, 0.2f, 0.2f, 1.0f);
 
 	GameObject* cam = new GameObject("Camera");
 	cam->AddComponent<Camera>(new Camera());
-	cam->GetComponent<Transform>()->SetLocalPosition(0.0f, 0.0f, -10.0f);
+	cam->GetComponent<Transform>()->SetLocalPosition(0.0f, 0.0f, -20.0f);
 	activeCamera = cam->GetComponent<Camera>();
 	AddObject(cam);
-
-	Material* mat = new Material(Shader::Default);
-	mat->SetPropertyValue<Texture2D>("diffuse", ResourceManager::LoadResource<Texture2D>("Textures/brick_diff.jpg"));
-	mat->SetPropertyValue<Texture2D>("normal", ResourceManager::LoadResource<Texture2D>("Textures/brick_nor.jpg"));
 	
-	mat->SetPropertyValue<Color>("tint", Color::White);
-	mat->SetPropertyValue<float>("roughness", 1.0f);
-	mat->SetPropertyValue<float>("metalness", 1.0f);
-
-	mat->SetSpecularPower(32.0f);
-
-	GameObject* light = new GameObject("DirectionalLight");
+	GameObject* light = new GameObject("Light");
 	light->AddComponent<Light>(new DirectionalLight(Color::White, 1.0f));
-	light->GetTransform()->Rotate(Quaternion::CreateFromEulerAngles(Vector3(45.0f, 45.0f, 0.0f)));
 	AddObject(light);
 
-	GameObject* pLight = new GameObject("PointLight");
-	pLight->AddComponent<Light>(new PointLight(Color::White, 1.0f, 10.0f));
-	pLight->GetTransform()->SetLocalPosition(Vector3(5.0f, 0.0f, 0.0f));
-	AddObject(pLight);
+	// TODO: Need a way to prevent Material memory leaks now that it is no longer a component
+	Material* earthMat = new Material(Shader::Default);
+	earthMat->SetPropertyValue<Texture2D>("diffuse", ResourceManager::LoadResource<Texture2D>("Textures/planet-diffuse.png"));
+	earthMat->SetPropertyValue<Texture2D>("normal", ResourceManager::LoadResource<Texture2D>("Textures/planet-normals.png"));
 
-	GameObject* texturedObj = new GameObject("Cube");
-	texturedObj->AddComponent<Material>(mat);
-	texturedObj->AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(CubeMesh)));
-	AddObject(texturedObj);
+	Material* moonMat = new Material(Shader::Default);
+	moonMat->SetPropertyValue<Texture2D>("diffuse", ResourceManager::LoadResource<Texture2D>("Textures/moon.jpg"));
 
-	GameObject* plane = new GameObject("Plane");
-	plane->AddComponent<Material>(Material::Default);
-	plane->AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(PlaneMesh)));
-	plane->GetComponent<Transform>()->SetLocalPosition(0.0f, -5.0f, 0.0f);
-	AddObject(plane);
+	GameObject* earth = new GameObject("Earth");
+	earth->AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(PrimitiveType::SphereMesh))); 
+	earth->GetComponent<MeshRenderer>()->SetMaterial(earthMat);
+	//earth->GetTransform()->SetLocalRotation(Quaternion::CreateFromAxisAngle(Vector3::Right, 23.4f));
+	AddObject(earth);
+	
+	GameObject* moon = new GameObject("Moon");
+	moon->AddComponent<MeshRenderer>(new MeshRenderer(ResourceManager::CreatePrimitive(PrimitiveType::SphereMesh)));
+	moon->GetComponent<MeshRenderer>()->SetMaterial(moonMat);
+	moon->GetTransform()->SetParent(earth->GetTransform());
+	moon->GetTransform()->SetLocalPosition(3.0f, 0.0f, 0.0f);
+	moon->GetTransform()->SetLocalScale(0.2f, 0.2f, 0.2f);
+	AddObject(moon);
 }
 
 void TestScene::UnloadResources()
@@ -55,9 +54,9 @@ void TestScene::Update(float dt)
 {
 	for (GameObject* p : objs)
 	{
-		if (p->GetName() == "Cube")
+		if (p->GetName() == "Earth")
 		{
-			p->GetTransform()->Rotate(Quaternion::CreateFromEulerAngles(Vector3(0.0f, 0.5f, 0.0f)));
+			p->GetTransform()->Rotate(Quaternion::CreateFromAxisAngle(Vector3::Up, 0.567f));
 		}
 		p->Update();
 	}

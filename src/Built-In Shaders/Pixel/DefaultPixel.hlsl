@@ -17,7 +17,7 @@ float4 main(MeshVertexOutput input) : SV_TARGET
 {
 	// Grab the texture color
 	float4 texcolor = _Albedo.Sample(_Sampler, input.texcoord);
-
+	return texcolor;
 	// Normal mapping
 	float3 normalT = UnpackNormals(_Normal.Sample(_Sampler, input.texcoord));
 	float3 N = input.normal;
@@ -28,9 +28,9 @@ float4 main(MeshVertexOutput input) : SV_TARGET
 
 	// Grab the metalness map
 	//float metalness = _Metalness.Sample(_Sampler, input.texcoord).r;
-	
+
 	float3 viewvector = normalize(eyePos - input.worldpos);
-	
+
 	texcolor *= tint;
 
 	//return texcolor * (CalculateAllLights(dLight, numDL, pLight, numPL, sLight, numSL, input.position, bumpedNormal, viewvector, specularPower) + ambientLight);

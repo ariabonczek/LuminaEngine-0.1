@@ -88,6 +88,7 @@ float Vector3::Length(){ return sqrtf(x*x + y*y + z*z); }
 float Vector3::LengthSquared(){ return x*x + y*y + z*z; }
 void  Vector3::Normalize(){ float val = 1.0f / sqrtf(x*x + y*y + z*z); x *= val; y *= val; z *= val; }
 Vector3 Vector3::Normalized(){ float val = 1.0f / sqrtf(x*x + y*y + z*z); return Vector3(x * val, y * val, z * val); }
+void Vector3::SetMagnitude(float mag){Normalize();x *= mag;y *= mag;z *= mag;}
 
 Vector3 Vector3::operator-(){ return Vector3(-x, -y, -z); }
 Vector3 Vector3::operator+(const Vector3& v){ return Vector3(x + v.x, y + v.y, z + v.z); }
@@ -99,6 +100,7 @@ bool	Vector3::operator!=(const Vector3& v){ return x != v.x || y != v.y || z != 
 float   Vector3::operator[](const int index){ switch (index){ case 0: return x; case 1: return y; case 2: return z; default: throw "Index out of range."; } }
 Vector3 operator*(const Vector3& v, float s){ return Vector3(v.x * s, v.y * s, v.z * s); }
 Vector3 operator*(float s, const Vector3& v){ return Vector3(v.x * s, v.y * s, v.z * s); }
+Vector3 operator*(const Vector3& v1, const Vector3 v2) { return Vector3(v1.x*v2.x, v1.y*v2.y, v1.z*v2.z); }
 
 Vector3 Vector3::Add(Vector3 v1, Vector3 v2){ return Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z); }
 Vector3 Vector3::Clamp(Vector3 v, Vector3 min, Vector3 max)
